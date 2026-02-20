@@ -2,46 +2,72 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <title>Kalkulator LSC</title>
-  <link rel="manifest" href="manifest.json">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator Tuningu</title>
   <style>
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: radial-gradient(circle at top, #111 0%, #000 60%);
-      color: #fff;
-      padding: 30px 20px;
-      max-width: 780px;
-      margin: auto;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f1c2e, #05080f);
+      color: #ffffff;
     }
+
     h1 {
       text-align: center;
       margin-bottom: 30px;
       font-size: 34px;
       letter-spacing: 1px;
     }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 700px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .item {
       display: flex;
+      flex-direction: column;
       justify-content: space-between;
-      align-items: center;
-      margin: 12px 0;
-      background: linear-gradient(145deg, #1c1c1c, #151515);
-      padding: 14px 16px;
+      gap: 10px;
+      background: linear-gradient(145deg, #0e1624, #0a111b);
+      padding: 16px;
       border-radius: 18px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.7);
+      border: 1px solid #1f3b63;
     }
-    .item span { font-size: 16px; }
+    }
+
+    .item span {
+      font-size: 16px;
+    }
+
     .item button {
-      padding: 6px 14px;
-      cursor: pointer;
-      border: none;
+      padding: 10px;
       border-radius: 12px;
-      background: #2a2a2a;
-      color: #fff;
-      font-size: 18px;
-      transition: all 0.2s ease;
+      border: none;
+      background: linear-gradient(145deg, #f7c948, #d4a017);
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s ease;
     }
-    .item button:hover { background: #3a3a3a; transform: scale(1.05); }
+
+    button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(145deg, #ffd95e, #e6b800);
+    }
+
+    .item button:hover {
+      background: #3a3a3a;
+      transform: scale(1.05);
+    }
+
     .count {
       margin: 0 12px;
       min-width: 26px;
@@ -49,6 +75,7 @@
       font-size: 18px;
       font-weight: bold;
     }
+
     .total {
       margin-top: 35px;
       font-size: 28px;
@@ -63,7 +90,9 @@
 <body>
 
 <h1>Kalkulator LSC</h1>
-<div id="items"></div>
+
+<div id="items" class="grid"></div>
+
 <div class="total" id="total">Łączny koszt: 0 $</div>
 
 <script>
@@ -86,11 +115,13 @@
   ];
 
   const counts = Array(parts.length).fill(0);
+
   const itemsDiv = document.getElementById('items');
 
   parts.forEach((part, index) => {
     const div = document.createElement('div');
     div.className = 'item';
+
     div.innerHTML = `
       <span>${part.name} (${part.price.toLocaleString('pl-PL')} $)</span>
       <div>
@@ -99,6 +130,7 @@
         <button onclick="change(${index}, 1)">+</button>
       </div>
     `;
+
     itemsDiv.appendChild(div);
   });
 
@@ -113,12 +145,7 @@
     counts.forEach((count, i) => {
       sum += count * parts[i].price;
     });
-    document.getElementById('total').innerText =
-      'Łączny koszt: ' + sum.toLocaleString('pl-PL') + ' $';
-  }
-
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js');
+    document.getElementById('total').innerText = 'Łączny koszt: ' + sum.toLocaleString('pl-PL') + ' $';
   }
 </script>
 
