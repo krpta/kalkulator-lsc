@@ -92,21 +92,35 @@
 
 <script>
   const parts = [
-    { name: 'Części wizualne', price: 20000 },
-    { name: 'Kolor główny', price: 15000 },
-    { name: 'Kolor dodatkowy', price: 15000 },
-    { name: 'Kolor wnętrza', price: 20000 },
-    { name: 'Kolor deski', price: 20000 },
+    // NAPRAWKI
+    { name: 'Pełna naprawka', price: 20000 },
+    { name: 'Naprawka silnika', price: 15000 },
+    { name: 'Mycie auta', price: 15000 },
+    { name: 'Otwarcie zamka', price: 80000 },
+
+    // WIZUALKA
+    { name: 'Naklejki', price: 40000 },
+    { name: 'Dźwięk klaksonu', price: 30000 },
+    { name: 'Zmiana koloru tablicy', price: 30000 },
+    { name: 'Przyciemnianie szyb', price: 30000 },
+    { name: 'Wymiana części karoserii', price: 40000 },
+
+    // ZMIANY KOLORÓW
+    { name: 'Kolor główny', price: 25000 },
+    { name: 'Kolor dodatkowy', price: 25000 },
+    { name: 'Kolor wnętrza', price: 30000 },
+    { name: 'Kolor deski rozdzielczej', price: 30000 },
+
+    // WYMIANY KÓŁ
+    { name: 'Wymiana felgi', price: 30000 },
+    { name: 'Kolor felgi', price: 30000 },
+    { name: 'Naklejki na opony', price: 30000 },
+    { name: 'Dym spod opon', price: 30000 },
+
+    // REFLEKTORY I NEONY
     { name: 'Xenony', price: 20000 },
-    { name: 'Neony', price: 100000 },
-    { name: 'Kolor neonów', price: 20000 },
-    { name: 'Zmiana felg', price: 20000 },
-    { name: 'Kolor felg', price: 20000 },
-    { name: 'Zmiana dymu', price: 20000 },
-    { name: 'Przyciemnienie szyb', price: 20000 },
-    { name: 'Zmiana tablic', price: 20000 },
-    { name: 'Klakson', price: 20000 },
-    { name: 'Pneumatyka', price: 100000 }
+    { name: 'Jedna strona neonu', price: 25000 },
+    { name: 'Kolor neonu', price: 25000 }
   ];
 
   const counts = Array(parts.length).fill(0);
