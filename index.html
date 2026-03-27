@@ -91,48 +91,77 @@
 <div class="total" id="total">Łączny koszt: 0 $</div>
 
 <script>
-  const parts = [
-    // NAPRAWKI
-    { name: 'Pełna naprawka', price: 20000 },
-    { name: 'Naprawka silnika', price: 15000 },
-    { name: 'Mycie auta', price: 15000 },
-    { name: 'Otwarcie zamka', price: 80000 },
+const categories = [
+  {
+    name: "NAPRAWKI",
+    items: [
+      { name: 'Pełna naprawka', price: 20000 },
+      { name: 'Naprawka silnika', price: 15000 },
+      { name: 'Mycie auta', price: 15000 },
+      { name: 'Otwarcie zamka', price: 80000 },
+    ]
+  },
+  {
+    name: "WIZUALKA",
+    items: [
+      { name: 'Naklejki', price: 40000 },
+      { name: 'Dźwięk klaksonu', price: 30000 },
+      { name: 'Zmiana koloru tablicy', price: 30000 },
+      { name: 'Przyciemnianie szyb', price: 30000 },
+      { name: 'Wymiana części karoserii', price: 40000 },
+    ]
+  },
+  {
+    name: "ZMIANY KOLORÓW",
+    items: [
+      { name: 'Kolor główny', price: 25000 },
+      { name: 'Kolor dodatkowy', price: 25000 },
+      { name: 'Kolor wnętrza', price: 30000 },
+      { name: 'Kolor deski rozdzielczej', price: 30000 },
+    ]
+  },
+  {
+    name: "WYMIANY KÓŁ",
+    items: [
+      { name: 'Wymiana felgi', price: 30000 },
+      { name: 'Kolor felgi', price: 30000 },
+      { name: 'Naklejki na opony', price: 30000 },
+      { name: 'Dym spod opon', price: 30000 },
+    ]
+  },
+  {
+    name: "REFLEKTORY I NEONY",
+    items: [
+      { name: 'Xenony', price: 20000 },
+      { name: 'Jedna strona neonu', price: 25000 },
+      { name: 'Kolor neonu', price: 25000 },
+    ]
+  }
+];
 
-    // WIZUALKA
-    { name: 'Naklejki', price: 40000 },
-    { name: 'Dźwięk klaksonu', price: 30000 },
-    { name: 'Zmiana koloru tablicy', price: 30000 },
-    { name: 'Przyciemnianie szyb', price: 30000 },
-    { name: 'Wymiana części karoserii', price: 40000 },
+let counts = [];
+let indexCounter = 0;
 
-    // ZMIANY KOLORÓW
-    { name: 'Kolor główny', price: 25000 },
-    { name: 'Kolor dodatkowy', price: 25000 },
-    { name: 'Kolor wnętrza', price: 30000 },
-    { name: 'Kolor deski rozdzielczej', price: 30000 },
+const itemsDiv = document.getElementById('items');
 
-    // WYMIANY KÓŁ
-    { name: 'Wymiana felgi', price: 30000 },
-    { name: 'Kolor felgi', price: 30000 },
-    { name: 'Naklejki na opony', price: 30000 },
-    { name: 'Dym spod opon', price: 30000 },
+categories.forEach(category => {
+  // nagłówek kategorii
+  const header = document.createElement('h2');
+  header.innerText = category.name;
+  header.style.gridColumn = "1 / -1";
+  header.style.marginTop = "20px";
+  header.style.color = "#f7c948";
+  itemsDiv.appendChild(header);
 
-    // REFLEKTORY I NEONY
-    { name: 'Xenony', price: 20000 },
-    { name: 'Jedna strona neonu', price: 25000 },
-    { name: 'Kolor neonu', price: 25000 }
-  ];
+  category.items.forEach(item => {
+    const index = indexCounter++;
+    counts[index] = 0;
 
-  const counts = Array(parts.length).fill(0);
-
-  const itemsDiv = document.getElementById('items');
-
-  parts.forEach((part, index) => {
     const div = document.createElement('div');
     div.className = 'item';
 
     div.innerHTML = `
-      <span>${part.name} (${part.price.toLocaleString('pl-PL')} $)</span>
+      <span>${item.name} (${item.price.toLocaleString('pl-PL')} $)</span>
       <div>
         <button onclick="change(${index}, -1)">-</button>
         <span class="count" id="count-${index}">0</span>
@@ -140,22 +169,30 @@
       </div>
     `;
 
+    div.dataset.price = item.price;
     itemsDiv.appendChild(div);
   });
+});
 
-  function change(index, delta) {
-    counts[index] = Math.max(0, counts[index] + delta);
-    document.getElementById(`count-${index}`).innerText = counts[index];
-    calculate();
-  }
+function change(index, delta) {
+  counts[index] = Math.max(0, counts[index] + delta);
+  document.getElementById(`count-${index}`).innerText = counts[index];
+  calculate();
+}
 
-  function calculate() {
-    let sum = 0;
-    counts.forEach((count, i) => {
-      sum += count * parts[i].price;
-    });
-    document.getElementById('total').innerText = 'Łączny koszt: ' + sum.toLocaleString('pl-PL') + ' $';
-  }
+function calculate() {
+  let sum = 0;
+  let i = 0;
+
+  document.querySelectorAll('.item').forEach(el => {
+    const price = parseInt(el.dataset.price);
+    sum += counts[i] * price;
+    i++;
+  });
+
+  document.getElementById('total').innerText =
+    'Łączny koszt: ' + sum.toLocaleString('pl-PL') + ' $';
+}
 </script>
 
 </body>
